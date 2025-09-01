@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_books")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Book {
 
     @Id
@@ -24,5 +24,11 @@ public class Book {
 
     @ManyToMany
     @JoinTable(name = "tb_author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
+
+    public Book(Long id, String title, String isbn) {
+        this.id = id;
+        this.title = title;
+        this.isbn = isbn;
+    }
 }
