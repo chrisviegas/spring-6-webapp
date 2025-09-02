@@ -21,8 +21,14 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Book ddd = new Book(null, "Domain Driven Design", "123456");
-        Book noEJB = new Book(null, "J2EE Development without EJB", "1233445");
+        Publisher oreillyMedia = new Publisher(null, "O'Reilly Media", "1005 Gravenstein Highway North", "Sebastopol", "CA", "95472");
+        Publisher manningPub = new Publisher(null, "Manning Publications", "20 Baldwin Road", "Shelter Island", "NY", "11964");
+
+        Book ddd = new Book(null, "Domain Driven Design", "123456", oreillyMedia);
+        Book noEJB = new Book(null, "J2EE Development without EJB", "1233445", manningPub);
+
+        oreillyMedia.getBooks().add(ddd);
+        manningPub.getBooks().add(noEJB);
 
         Author eric = new Author(null, "Eric", "Evans");
         Author rod = new Author(null, "Rod", "Johnson");
@@ -33,17 +39,14 @@ public class BootstrapData implements CommandLineRunner {
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
 
-        Publisher oreillyMedia = new Publisher(null, "O'Reilly Media", "1005 Gravenstein Highway North", "Sebastopol", "CA", "95472");
-        Publisher manningPub = new Publisher(null, "Manning Publications", "20 Baldwin Road", "Shelter Island", "NY", "11964");
+        Publisher oreillyMediaSaved = publisherRepository.save(oreillyMedia);
+        Publisher manningPubSaved = publisherRepository.save(manningPub);
 
         Author ericSaved = authorRepository.save(eric);
         Author rodSaved = authorRepository.save(rod);
 
         Book dddSaved = bookRepository.save(ddd);
         Book noEJBSaved = bookRepository.save(noEJB);
-
-        Publisher oreillyMediaSaved = publisherRepository.save(oreillyMedia);
-        Publisher manningPubSaved = publisherRepository.save(manningPub);
 
         System.out.println("Book count: " + bookRepository.count());
         System.out.println("Author count: " + authorRepository.count());

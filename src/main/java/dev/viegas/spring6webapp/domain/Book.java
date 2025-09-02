@@ -1,7 +1,6 @@
 package dev.viegas.spring6webapp.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,10 +28,14 @@ public class Book {
     @JoinTable(name = "tb_author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
-    public Book(Long id, String title, String isbn) {
+    @ManyToOne
+    private Publisher publisher;
+
+    public Book(Long id, String title, String isbn, Publisher publisher) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
+        this.publisher = publisher;
     }
 
     @Override

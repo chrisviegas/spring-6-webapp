@@ -1,12 +1,13 @@
 package dev.viegas.spring6webapp.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_publishers")
@@ -27,15 +28,18 @@ public class Publisher {
 
     private String state;
 
-    private String zip;
+    private String zipCode;
 
-    public Publisher(Long id, String publisherName, String address, String city, String state, String zip) {
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> books = new HashSet<>();
+
+    public Publisher(Long id, String publisherName, String address, String city, String state, String zipCode) {
         this.id = id;
         this.publisherName = publisherName;
         this.address = address;
         this.city = city;
         this.state = state;
-        this.zip = zip;
+        this.zipCode = zipCode;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class Publisher {
                 ", address='" + address + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
+                ", zipCode='" + zipCode + '\'' +
                 '}';
     }
 
