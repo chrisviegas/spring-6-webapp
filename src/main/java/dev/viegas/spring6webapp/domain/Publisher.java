@@ -1,5 +1,6 @@
 package dev.viegas.spring6webapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Publisher {
 
     private String zipCode;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "publisher")
     private Set<Book> books = new HashSet<>();
 

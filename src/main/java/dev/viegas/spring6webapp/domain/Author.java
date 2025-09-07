@@ -1,5 +1,6 @@
 package dev.viegas.spring6webapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Author {
 
     private String lastName;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
